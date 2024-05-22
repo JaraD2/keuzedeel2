@@ -5,6 +5,7 @@ import {
   Scripts,
   ScrollRestoration,
 } from "@remix-run/react";
+import { loader } from "~/routes/db/loader";
 
 import Sidebar from "./components/sidebar";
 

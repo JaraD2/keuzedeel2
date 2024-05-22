@@ -9,9 +9,6 @@ import { redirect } from "@remix-run/node";
 
 import { useEffect } from "react";
 import { createEmptyNote } from "~/routes/db/db";
-import {loader} from "~/routes/db/loader";
-
-console.log(loader);
 
 export const action = async () => {
   const note = await createEmptyNote();
@@ -19,8 +16,8 @@ export const action = async () => {
 };
 
 
-export default function Sidebar() {
-  const { notes, q } = useLoaderData<typeof loader>();
+function Sidebar() {
+  const { notes, q } = useLoaderData();
   const navigation = useNavigation();
   const submit = useSubmit();
   const searching =
@@ -95,3 +92,5 @@ export default function Sidebar() {
     </div>
   );
 }
+
+export default Sidebar;
