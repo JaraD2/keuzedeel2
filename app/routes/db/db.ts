@@ -1,4 +1,4 @@
-import { prisma } from "~/routes/client";
+import { prisma } from "~/routes/db/client";
 import { matchSorter } from "match-sorter";
 import sortBy from "sort-by";
 

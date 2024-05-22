@@ -1,37 +1,97 @@
-import { Form } from "@remix-run/react";
+import {
+  Form,
+  NavLink,
+  useLoaderData,
+  useNavigation,
+  useSubmit,
+} from "@remix-run/react";
+import { redirect } from "@remix-run/node";
 
-function Sidebar() {
+import { useEffect } from "react";
+import { createEmptyNote } from "~/routes/db/db";
+import loader from "~/routes/db/loader";
+
+console.log(loader);
+
+export const action = async () => {
+  const note = await createEmptyNote();
+  return redirect(`/notes/${note.id}/edit`);
+};
+
+
+export default function Sidebar() {
+  const { notes, q } = useLoaderData();
+  const navigation = useNavigation();
+  const submit = useSubmit();
+  const searching =
+    navigation.location &&
+    new URLSearchParams(navigation.location.search).has("q");
+
+  useEffect(() => {
+    const searchField = document.getElementById("q");
+    if (searchField instanceof HTMLInputElement) {
+      searchField.value = q || "";
+    }
+  }, [q]);
+
   return (
-  <div id="sidebar">
-    <h1>Remix Contacts</h1>
-    <div>
-      <Form id="search-form" role="search">
-        <input
-          id="q"
-          aria-label="Search contacts"
-          placeholder="Search"
-          type="search"
-          name="q"
-        />
-        <div id="search-spinner" aria-hidden hidden={true} />
-      </Form>
-      <Form method="post">
-        <button type="submit">New</button>
-      </Form>
+    <div id="sidebar">
+      <div>
+        <Form
+          id="search-form"
+          onChange={(event) => {
+            const isFirstSearch = q === null;
+            submit(event.currentTarget, {
+              replace: !isFirstSearch,
+            });
+          }}
+          role="search"
+        >
+          <input
+            id="q"
+            className={searching ? "loading" : ""}
+            aria-label="Search notes"
+            defaultValue={q || ""}
+            placeholder="Search"
+            type="search"
+            name="q"
+          />
+          <div aria-hidden hidden={!searching} id="search-spinner" />
+        </Form>
+        <Form method="post" action="./">
+          <button type="submit">New</button>
+        </Form>
+      </div>
+      <nav>
+        {notes.length ? (
+          <ul>
+            {notes
+              .sort((a, b) =>
+                a.viewedAt && b.viewedAt
+                  ? a.viewedAt > b.viewedAt
+                    ? -1
+                    : 1
+                  : 0,
+              )
+              .map((note) => (
+                <li key={note.id}>
+                  <NavLink
+                    className={({ isActive, isPending }) =>
+                      isActive ? "active" : isPending ? "pending" : ""
+                    }
+                    to={`notes/${note.id}`}
+                  >
+                    {note.title ? <>{note.title}</> : <i>No Name</i>}{" "}
+                  </NavLink>
+                </li>
+              ))}
+          </ul>
+        ) : (
+          <p>
+            <i>No notes</i>
+          </p>
+        )}
+      </nav>
     </div>
-    <nav>
-      <ul>
-        <li>
-          <a href={`/contacts/1`}>Your Name</a>
-        </li>
-        <li>
-          <a href={`/contacts/2`}>Your Friend</a>
-        </li>
-      </ul>
-    </nav>
-  </div>
   );
 }
-export default Sidebar;
-
-

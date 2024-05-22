@@ -5,10 +5,11 @@ import {
   Scripts,
   ScrollRestoration,
 } from "@remix-run/react";
-import appStylesHref from "./app.css?url";
-import { LinksFunction } from "@remix-run/node";
 
 import Sidebar from "./components/sidebar";
+
+import { LinksFunction } from "@remix-run/node";
+import appStylesHref from "./app.css?url";
 
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: appStylesHref },
