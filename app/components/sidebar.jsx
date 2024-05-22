@@ -20,7 +20,7 @@ export const action = async () => {
 
 
 export default function Sidebar() {
-  const { notes, q } = useLoaderData();
+  const { notes, q } = useLoaderData<typeof loader>();
   const navigation = useNavigation();
   const submit = useSubmit();
   const searching =
