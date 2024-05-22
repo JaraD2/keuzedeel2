@@ -9,7 +9,7 @@ import { redirect } from "@remix-run/node";
 
 import { useEffect } from "react";
 import { createEmptyNote } from "~/routes/db/db";
-import loader from "~/routes/db/loader";
+import {loader} from "~/routes/db/loader";
 
 console.log(loader);
 
