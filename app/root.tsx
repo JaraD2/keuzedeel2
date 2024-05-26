@@ -5,16 +5,22 @@ import {
   Scripts,
   ScrollRestoration,
 } from "@remix-run/react";
-import { loader } from "~/routes/db/loader";
-
 import Sidebar from "./components/sidebar";
-
-import { LinksFunction } from "@remix-run/node";
+import { LinksFunction, LoaderFunctionArgs, json } from "@remix-run/node";
 import appStylesHref from "./app.css?url";
+import { getAllNotes } from "./routes/db/db";
+
 
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: appStylesHref },
 ];
+export const loader = async ({ request }: LoaderFunctionArgs) => {
+  const url = new URL(request.url);
+  const q = url.searchParams.get("q");
+  const notes = await getAllNotes(q);
+  return json({ notes, q });
+};
+
 
 export default function App() {
   return (

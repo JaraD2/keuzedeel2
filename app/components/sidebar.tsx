@@ -6,9 +6,10 @@ import {
   useSubmit,
 } from "@remix-run/react";
 import { redirect } from "@remix-run/node";
-
-import { useEffect } from "react";
+import { loader } from "../root";
 import { createEmptyNote } from "~/routes/db/db";
+import { useEffect } from "react";
+
 
 export const action = async () => {
   const note = await createEmptyNote();
@@ -17,7 +18,7 @@ export const action = async () => {
 
 
 function Sidebar() {
-  const { notes, q } = useLoaderData();
+  const { notes, q } = useLoaderData<typeof loader>();
   const navigation = useNavigation();
   const submit = useSubmit();
   const searching =
@@ -76,7 +77,7 @@ function Sidebar() {
                     className={({ isActive, isPending }) =>
                       isActive ? "active" : isPending ? "pending" : ""
                     }
-                    to={`notes/${note.id}`}
+                    to={`../notes/${note.id}`}
                   >
                     {note.title ? <>{note.title}</> : <i>No Name</i>}{" "}
                   </NavLink>
