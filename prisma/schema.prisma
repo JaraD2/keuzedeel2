@@ -24,7 +24,7 @@ model Users {
 model Notes {
   id        Int      @id @default(autoincrement())
   title     String
-  content   String
+  content   String   @db.VarChar(65535)
   userId    Int
   user      Users    @relation(fields: [userId], references: [id])
   createdAt DateTime @default(now())
