@@ -5,17 +5,8 @@ import {
   useNavigation,
   useSubmit,
 } from "@remix-run/react";
-import { redirect } from "@remix-run/node";
-import { loader } from "../root";
-import { createEmptyNote } from "~/routes/db/db";
+import { loader } from "~/root";
 import { useEffect } from "react";
-
-
-export const action = async () => {
-  const note = await createEmptyNote();
-  return redirect(`/notes/${note.id}/edit`);
-};
-
 
 function Sidebar() {
   const { notes, q } = useLoaderData<typeof loader>();
