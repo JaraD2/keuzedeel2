@@ -1,6 +1,8 @@
 import {prisma} from "~/routes/db/client";
 import {matchSorter} from "match-sorter";
 import sortBy from "sort-by";
+import bcrypt from "bcryptjs";
+import {redirect} from "@remix-run/node";
 
 export const db = prisma;
 
@@ -58,4 +60,22 @@ export const lookUpUser = async (email: string) => {
 		where: {email},
 	});
 };
+export const createUser = async (email: string, password: string, username: string, phone: string) => {
+	const hashedpassword:string = await bcrypt.hash(password, 10);
+
+	if (!await lookUpUser(email)) {
+		return redirect("../../")
+	}
+
+	return db.users.create({
+		data: {
+			username: username,
+			email: email,
+			password: hashedpassword,
+			phone: phone,
+		}
+	})
+}
+
+
 
