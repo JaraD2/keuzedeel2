@@ -61,7 +61,7 @@ export const lookUpUser = async (email: string) => {
 	});
 };
 export const createUser = async (email: string, password: string, username: string, phone: string) => {
-	const hashedpassword:string = await bcrypt.hash(password, 10);
+	const hashedPassword:string = await bcrypt.hash(password, 10);
 
 	if (!await lookUpUser(email)) {
 		return redirect("../../")
@@ -71,7 +71,7 @@ export const createUser = async (email: string, password: string, username: stri
 		data: {
 			username: username,
 			email: email,
-			password: hashedpassword,
+			password: hashedPassword,
 			phone: phone,
 		}
 	})
