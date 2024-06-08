@@ -1,6 +1,6 @@
 import type {LoaderFunctionArgs, ActionFunctionArgs} from "@remix-run/node";
 import {json} from "@remix-run/node";
-import {Form, useLoaderData} from "@remix-run/react";
+import {Form, Link, useLoaderData} from "@remix-run/react";
 import invariant from "tiny-invariant";
 import {getNote, updateNote} from "~/routes/db/db";
 
@@ -49,6 +49,9 @@ export default function EditNotes() {
 				>
 					<button type="submit">Delete</button>
 				</Form>
+				<button>
+					<Link to={"../"}>Back</Link>
+				</button>
 			</div>
 			<textarea defaultValue={note.content} name="content" rows={6}/>
 
