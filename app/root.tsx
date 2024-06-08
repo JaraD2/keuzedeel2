@@ -13,7 +13,7 @@ import {createEmptyNote, getAllNotes} from "./routes/db/db";
 
 export const action = async () => {
 	const note = await createEmptyNote();
-	return redirect(`/notes/${note.id}/edit`);
+	return redirect(`/notes/${note.id}`);
 };
 
 
@@ -35,6 +35,7 @@ export default function App() {
 		<head>
 			<meta charSet="utf-8"/>
 			<meta name="viewport" content="width=device-width, initial-scale=1"/>
+			<title>Notepad</title>
 			<Meta/>
 			<Links/>
 		</head>
