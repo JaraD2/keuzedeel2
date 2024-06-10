@@ -24,3 +24,6 @@ DATABASE_URL="mysql://${USER}:${PASSWORD}@${HOST}:${PORT}/${DATABASE_NAME}"
 ```
 this is using mysql if you have a database using something else look for support here
 https://www.prisma.io/docs/orm/reference/connection-urls
+
+If it prisma gives an error saying it needs permissions to make a shadow database look for support here
+https://www.prisma.io/docs/orm/prisma-migrate/understanding-prisma-migrate/shadow-database
